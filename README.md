@@ -23,6 +23,13 @@ code from an architectural perspective:
 - [URL Signing](UrlSigning.md) guarantees that only authorized users can update data fields 
   and enables disables or hides buttons for which the user does not have Authorization.
 
+- [Primary Key Encryption](PrimaryKeyEncryption.md) ensures that Rest Get requests for a single
+  data item do not reveal the key strategy to attackers. Suppose PKs are sequential.
+  An attacker can guess the next several numbers in a sequence to gain access to data
+  they would normally not be allowed to see. Signed PKs can be used to link data from
+  one location to another. For example, suppose we want to assign a State to an Address.
+  We need only 
+
 Improving User Experiences:
 
 - [Opinionated Data Field Lifecycle States](OpinionatedDataFieldLifecycle.md) visually informs uses of
@@ -30,4 +37,3 @@ Improving User Experiences:
 
 - [Reloading Data State of an Application](Reload.md) brings the user back to
   the state they were in when the application last exited.
-
