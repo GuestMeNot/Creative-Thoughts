@@ -10,3 +10,10 @@ If the caller eventually, asks to update the object, the privileges
 can be checked when deserializing the object. If the encrypted or 
 signed data has changed then the user does not have access and the 
 update can be rejected.
+
+This information can be leveraged dynamically on the front-end.
+For example, Data Entry fields can be hidden for fields which are 
+encrypted or made read-only for data which is digitally signed. 
+
+
+
