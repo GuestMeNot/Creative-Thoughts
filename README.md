@@ -1,5 +1,5 @@
 
-Here are a few random thoughts and architectural ideas.
+### A few random thoughts and architectural ideas.
 
 Toward [DRYer](https://medium.com/kite-srm/what-writing-dry-code-really-means-a8bb031289c9) 
 code from an architectural perspective:
@@ -56,3 +56,7 @@ Security
   token in a stateless environment. Applications generally allow access to a relatively 
   small number of roles. The set of roles allowed for an application can be read from
   metadata attached to each Rest method.
+
+### Distributed Mutex
+
+Here are a few thoughts around creating a [Distributed Mutex](DistributedMutex.md).
