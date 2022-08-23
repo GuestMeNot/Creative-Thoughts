@@ -1,1 +1,12 @@
 ## Unmodifiable and Invisible Data
+
+When Serializing objects, we can inspect a user's privileges
+to determine the whether of not a user has access to a particular 
+field such as a Social Security Number. If they do not have access
+then the field can be encrypted. If they have read-only privileges
+the data can be digitally signed.
+
+If the caller eventually, asks to update the object, the privileges
+can be checked when deserializing the object. If the encrypted or 
+signed data has changed then the user does not have access and the 
+update can be rejected.
