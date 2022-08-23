@@ -40,5 +40,7 @@ There are a lot of issues to be worked through.
 - How does the code roll back the changes for a mutex?
 - It is assumed that a Mutex looks like a Rust Mutex what if it doesn't?
 - There are several other concerns [here](https://cliffle.com/blog/rust-mutexes/).
+- More research needs to be done on Distributed Mutexes prior to implementation
+    as other designs may be better or may inform this design.
 
 
