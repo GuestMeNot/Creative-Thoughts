@@ -1,8 +1,8 @@
 ### Thoughts on a Distributed Mutex
 
 Often when creating concurrent data structures a mutex is used to guard access
-to underlying data. What if there were a Distributed Mutex? Then many of
-the concurrent data structures could become distributed be copying the mutex
+to the underlying data. What if we had a Distributed Mutex? Then many of
+the concurrent data structures could become distributed by copying the mutex
 and the associated data. The Distributed Mutex would not presuppose a specific
 implementation for a Distributed HashMap or a Distributed Array as these
 choices would be dependent on additional criteria. 
@@ -14,11 +14,11 @@ existing Mutex, but this is probably not the best approach.
 
 1. An attempt to acquire the Mutex guard is made.
 2. The Mutex checks if it currently has the lock locally or whether it must request the lock.
-3. If the Mutex has the lock locally and no other code else is requesting the Mutex then the lock is granted.
-    - If the lock is granted and the data associated with the lock is modified the data is
-      copied to other mutex holder lazily when they request access to the lock.
+3. If the Mutex has the lock locally and no other code is requesting the Mutex then the lock is granted.
+    - If the lock is granted and the data associated with the lock is modified, the data is
+      copied to another mutex holder lazily when they request access to the lock.
 4. If the mutex does not have the lock locally a request is made to the lock holder to gain access to the lock.
-5. If the Mutex lock holder does not have any requests for the lock then they:
+5. If the Mutex lock holder does not have any requests for the lock then:
     - It sends the Mutex lock to the lock requester along with the locked data
     - It informs other participants in the Mutex that the lock has moved to a new lock holder.
 6. If the lock changes locations while a lock requester is asking for 
@@ -27,7 +27,7 @@ existing Mutex, but this is probably not the best approach.
     can vote to allow the new requester to access the lock using a consensus 
     mechanism.
     - When the previously unreachable prior lock holder comes online, they are informed
-        that the lost the lock and the prior lock holder will roll back the changes
+        that they lost the lock and the prior lock holder will roll back the changes
         to a prior state.
 
 ### Gotchas
@@ -38,8 +38,8 @@ There are a lot of issues to be worked through:
 - Which protocol is used?
 - How does one participate in a mutex?
 - How does the code roll back the changes for a mutex?
-- It is assumed that a Mutex looks like a Rust Mutex what if it doesn't?
-- There are several other concerns [here](https://cliffle.com/blog/rust-mutexes/).
+- It is assumed that a Mutex looks like a Rust Mutex what if it isn't?
+- There are several other concerns discussed [here](https://cliffle.com/blog/rust-mutexes/).
 - More research needs to be done on Distributed Mutexes prior to implementation
     as other designs may be better or may inform this design.
 - There are could subtle usage scenarios, which need to be thought through.

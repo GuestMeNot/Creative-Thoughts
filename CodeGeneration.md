@@ -1,6 +1,6 @@
 ### Code Generation using Templates
 
-Much of the code in a typical suite of Microservices is boilerplate.
+A large percentage of the code in a typical suite of Microservices is boilerplate.
 For example, we may need to create a Person service 
 
 Rewriting this code repeatedly is a waste of time. Generics help 
@@ -10,7 +10,7 @@ several files which need to be kept in sync.
 In many applications code, including database model objects could be generated
 just using a database structure. Several RMDBMs provide access to the
 database structure, which can be leveraged to generate the model objects,
-[Data Access Objects](https://en.wikipedia.org/wiki/Data_access_object) 
+[Data Access Objects](https://en.wikipedia.org/wiki/Data_access_object),
 and Rest Microservices.
 
 Additionally, if signatures  or code changes then the application code 

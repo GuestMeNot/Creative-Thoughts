@@ -6,9 +6,9 @@ field such as a Social Security Number. If they do not have access
 then the field can be encrypted. If they have read-only privileges
 the data can be digitally signed.
 
-If the caller eventually, asks to update the object, the privileges
+If the caller eventually asks to update the object, the privileges
 can be checked when deserializing the object. If the encrypted or 
-signed data has changed then the user does not have access and the 
+signed data has changed and the user does not have access then the 
 update can be rejected.
 
 This information can be leveraged dynamically on the front-end.
