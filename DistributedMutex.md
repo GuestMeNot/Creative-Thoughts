@@ -13,16 +13,16 @@ existing Mutex, but this is probably not the best approach.
 ### Design
 
 1. An attempt to acquire the Mutex guard is made.
-2. The Mutex checks if it currently has the lock locally or whether it must request the lock.
-3. If the Mutex has the lock locally and no other code is requesting the Mutex then the lock is granted.
-    - If the lock is granted and the data associated with the lock is modified, the data is
+2. The Mutex checks if it currently has an internal lock locally or whether it must request the lock.
+3. If the Mutex has the internal lock locally and no other code is requesting the Mutex then the lock is granted.
+    - If the internal lock is granted and the data associated with the lock is modified, the data is
       copied to another mutex holder lazily when they request access to the lock.
-4. If the mutex does not have the lock locally a request is made to the lock holder to gain access to the lock.
-5. If the Mutex lock holder does not have any requests for the lock then:
-    - It sends the Mutex lock to the lock requester along with the locked data
-    - It informs other participants in the Mutex that the lock has moved to a new lock holder.
-6. If the lock changes locations while a lock requester is asking for 
-   the lock then the requester asks for the lock from the new lock holder.
+4. If the mutex does not have the internal lock locally a request is made to the lock holder to gain access to the lock.
+5. If the Mutex lock holder does not have any requests for the internal lock then:
+    - It sends the Mutex internal lock to the lock requester along with any updated mutex data
+    - It informs other participants in the Mutex that the internal lock has moved to a new lock holder.
+6. If the internal lock changes locations while a lock requester is asking for 
+   it then the requester asks for the internal lock from the new lock holder.
 7. If a lock requester cannot reach a lock holder then the remaining members
     can vote to allow the new requester to access the lock using a consensus 
     mechanism.
@@ -43,5 +43,8 @@ There are a lot of issues to be worked through:
 - More research needs to be done on Distributed Mutexes prior to implementation
     as other designs may be better or may inform this design.
 - There are could subtle usage scenarios, which need to be thought through.
-
-
+- How is the internal lock represented such that all participants can self-recognize 
+  who has the internal lock?
+- How would multiple Distributed Mutexes in an application share network connections?
+- What happens to downstream code when the Mutex is rolled back?
+- What happens if the network is partition evenly across participants?
