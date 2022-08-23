@@ -32,7 +32,7 @@ existing Mutex, but this is probably not the best approach.
 
 ### Gotchas
 
-There are a lot of issues to be worked through.
+There are a lot of issues to be worked through:
 
 - What does the consensus mechanism look like?
 - Which protocol is used?
@@ -42,5 +42,6 @@ There are a lot of issues to be worked through.
 - There are several other concerns [here](https://cliffle.com/blog/rust-mutexes/).
 - More research needs to be done on Distributed Mutexes prior to implementation
     as other designs may be better or may inform this design.
+- There are could subtle usage scenarios, which need to be thought through.
 
 
