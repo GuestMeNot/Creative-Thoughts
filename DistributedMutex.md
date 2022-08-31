@@ -30,10 +30,14 @@ existing Mutex, but this is probably not the best approach.
         that they lost the lock and the prior lock holder will roll back the changes
         to a prior state.
 
-### Gotchas
+### Concerns
 
 There are a lot of issues to be worked through:
 
+- A formal specification such as 
+  [LOTOS](https://en.wikipedia.org/wiki/Language_Of_Temporal_Ordering_Specification),
+  [Process Calculi](https://en.wikipedia.org/wiki/Language_Of_Temporal_Ordering_Specification) 
+  etc. should be used.
 - What does the consensus mechanism look like?
 - Which protocol is used?
 - How does one participate in a mutex?
@@ -48,3 +52,4 @@ There are a lot of issues to be worked through:
 - How would multiple Distributed Mutexes in an application share network connections?
 - What happens to downstream code when the Mutex is rolled back?
 - What happens if the network is partition evenly across participants?
+
