@@ -27,6 +27,14 @@ To boostrap the system X number of peers with associated digital
 certificates can be created without GAS. Afterwards, GAS will need 
 to be paid to prevent misuse.
 
+### Implications
+
+One interesting implication of this approach is that after X peers have joined
+any addition peer who wishes to join must already have sufficient GAS.
+This could be seen as positive since the distributed system will not be 
+flooded with random peers requesting to join. It could also be seen as
+negative because it limits the potential pool of additional peers.
+
 ### CID
 
 One alternative to this system might be to use 
