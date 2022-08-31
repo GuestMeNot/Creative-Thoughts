@@ -40,20 +40,19 @@ negative because it limits the potential pool of additional peers.
 This section outlines the certificate creation process in 
 [LOTOS](https://en.wikipedia.org/wiki/Language_Of_Temporal_Ordering_Specification).
 
-_NOTE_: Here `exit` only means that the certificate creation process has completed,
-not that the entire system has exited.
-
 [WIP]
 
-    (no_peers; only_genesis_block_in_chain; create_certificate; create_block; write_certificate; await_peers;)
+    (no_peers; only_genesis_block_in_chain; create_certificate; sign_certificate; create_certificate_block; write_certificate_to_storage; await_peers)
     ;[await_peers];
-    (no_blocks; await_peers; request_blocks; search_for_block; (my_cert_block_found; exit)[](my_cert_block_not_found; create_certificate; create_block; write_certificate; await_peers))
+    (no_certificate_in_storage; not_genesis_block_creator; no_blocks; await_peers; request_blocks; search_for_block; (my_cert_block_found; await_peers)[](my_cert_block_not_found; create_certificate; send_certificate_to_peer; receive_certificate_block_number_from_peer; write_certificate_to_storage; await_peers))
+    ;[await_peers];
+    (receive_certificate_from_peer; sign_certificate; create_certificate_block; send_certificate_block_number_to_peer; await_peers)
 
 ### CID
 
 One alternative to this system might be to use 
 [IPFS CIDs](https://docs.ipfs.tech/concepts/content-addressing/) 
-to store the certificates.
+to store certificates.
 
 ### Further Investigation
 
