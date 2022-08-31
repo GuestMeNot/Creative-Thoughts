@@ -32,3 +32,10 @@ to be paid to prevent misuse.
 One alternative to this system might be to use 
 [IPFS CIDs](https://docs.ipfs.tech/concepts/content-addressing/) 
 to store the certificates.
+
+### Further Investigation
+
+- A formal specification such as
+  [LOTOS](https://en.wikipedia.org/wiki/Language_Of_Temporal_Ordering_Specification),
+  [Process Calculi](https://en.wikipedia.org/wiki/Language_Of_Temporal_Ordering_Specification)
+  etc. should be used.
