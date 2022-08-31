@@ -35,6 +35,20 @@ This could be seen as positive since the distributed system will not be
 flooded with random peers requesting to join. It could also be seen as
 negative because it limits the potential pool of additional peers.
 
+### LOTOS specification
+
+This section outlines the certificate creation process in 
+[LOTOS](https://en.wikipedia.org/wiki/Language_Of_Temporal_Ordering_Specification).
+
+_NOTE_: Here `exit` only means that the certificate creation process has completed,
+not that the entire system has exited.
+
+[WIP]
+
+    (no_peers; only_genesis_block_in_chain; create_certificate; create_block; write_certificate; await_peers;)
+    ;[await_peers];
+    (no_blocks; await_peers; request_blocks; search_for_block; (my_cert_block_found; exit)[](my_cert_block_not_found; create_certificate; create_block; write_certificate; await_peers))
+
 ### CID
 
 One alternative to this system might be to use 
@@ -43,7 +57,6 @@ to store the certificates.
 
 ### Further Investigation
 
-- A formal specification such as
-  [LOTOS](https://en.wikipedia.org/wiki/Language_Of_Temporal_Ordering_Specification),
+- A formal specification 
   [Process Calculi](https://en.wikipedia.org/wiki/Language_Of_Temporal_Ordering_Specification)
-  etc. should be used.
+  could also be used.
