@@ -60,3 +60,8 @@ Security
 ### Distributed Mutex
 
 Here are a few thoughts around creating a [Distributed Mutex](DistributedMutex.md).
+
+### Decentralized Digital Certificates
+
+[Decentralized Digital Certificates](DecentralizedDigitalCertificates.md) allows a 
+blockchain to verify the identity of peers.
