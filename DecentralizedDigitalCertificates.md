@@ -3,9 +3,9 @@
 An issue with creating Digital Certificates without a centralized 
 authority is validating the identity of a requester.
 
-Assuming the physical street address and official name are not
-needed as part of the certification process as is often the case 
-in Blockchain applications this approach can be used.
+Assuming the physical street address and legal name of the owner of
+a digital certificate are not needed as part of the certification process 
+as is often the case in Blockchain applications this approach can be used.
 
 ### Blockchain based digital authority.
 
