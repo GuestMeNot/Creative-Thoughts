@@ -52,4 +52,4 @@ There are a lot of issues to be worked through:
 - How would multiple Distributed Mutexes in an application share network connections?
 - What happens to downstream code when the Mutex is rolled back?
 - What happens if the network is partition evenly across participants?
-
+- [Zookeeper](https://zookeeper.apache.org/) can be looked at for inspiration.

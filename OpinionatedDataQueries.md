@@ -1,5 +1,7 @@
 ### Opinionated Data Queries
 
+[WIP - currently this is very simplified. There is much more functionality to be added]
+
 In CRUD applications many queries can be represented by metadata. If the metadata value
 is present, the a [Search Argument or (SARG)](https://www.sqlconsulting.com/archives/understanding-search-arguments/) 
 can be generated and attached to a database query.

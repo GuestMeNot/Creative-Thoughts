@@ -13,3 +13,18 @@ when the data is saved.
 Front-End components can be made aware of this assignment so that the result
 is seamless to the developer and front-end user.
 
+### Example
+
+Consider the following structure:
+
+    struct Person { id: int; first_name: string }
+
+we can augment this structure with metadata to indicate that a Primary Key should be encrypted.
+
+_NOTE_: while the syntax below may be similar to Rust macros it is not.
+
+    struct Person {
+        #[encrypt]
+        id: int
+        first_name: string,
+    }

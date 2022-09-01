@@ -16,4 +16,19 @@ For example, Data Entry fields can be hidden for fields which are
 encrypted or made read-only for data which is digitally signed. 
 
 
+### Example
 
+Consider the following structure:
+
+    struct Person { first_name: string }
+
+we can augment this structure with metadata to indicate that a Primary Key should be encrypted.
+
+_NOTE_: while the syntax below may be similar to Rust macros it is not.
+
+    struct Person {
+        #[encrypt(normal_user)]
+        #[read_only(special_user)]
+        #[read_write(super_special_user)]
+        first_name: string,
+    }
