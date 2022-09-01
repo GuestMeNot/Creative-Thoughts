@@ -45,12 +45,28 @@ This section outlines the certificate creation process in
     (
       (no_peers; only_genesis_block_in_chain; create_certificate; sign_certificate; create_certificate_block; write_certificate_to_storage; await_peers)
       ||
-      (peer_available; no_certificate_in_storage; not_genesis_block_creator; no_blocks; await_peers; request_blocks; search_for_block; (my_cert_block_found; await_peers)[](my_cert_block_not_found; create_certificate; send_certificate_to_peer; receive_certificate_block_number_from_peer; write_certificate_to_storage; await_peers))
+      (peer_available; no_certificate_in_storage; not_genesis_block_creator; no_blocks; await_peers; request_blocks; search_for_my_cert_block; my_cert_block_found; await_peers)
+      ||
+      (peer_available; no_certificate_in_storage; not_genesis_block_creator; no_blocks; await_peers; request_blocks; search_for_my_cert_block; my_cert_block_not_found; create_certificate; send_certificate_to_peer; receive_certificate_block_number_from_peer; write_certificate_to_storage; await_peers))
+      ||
+      (peer_available; no_certificate_in_storage; not_genesis_block_creator; no_blocks; await_peers; request_blocks; search_for_my_cert_block; my_cert_block_not_found; create_certificate; send_certificate_to_peer; receive_certificate_invalid_from_peer; exit))
+      ||
+      (no_peers; certificate_in_storage; await_peers; send_certificate_to_peer; receive_certificate_block_number_from_peer; await_peers)
+      ||
+      (no_peers; certificate_in_storage; await_peers; send_certificate_to_peer; receive_certificate_invalid_from_peer; exit)
       || 
-      (certificate_in_storage; await_peers)
+      (peer_available; send_certificate_to_peer; receive_certificate_block_number_from_peer; await_peers)
+      ||
+      (peer_available; send_certificate_to_peer; receive_certificate_invalid_from_peer; exit)
     )
     |await_peers|
-    (await_peers; receive_certificate_from_peer; sign_certificate; create_certificate_block; send_certificate_block_number_to_peer; await_peers)
+    (
+      (await_peers; receive_certificate_from_peer; certificate_not_already_registered; sign_certificate; create_certificate_block; send_certificate_block_number_to_peer; await_peers)
+      ||
+      (await_peers; receive_certificate_from_peer; certificate_already_registered; check_certificate_signature; send_certificate_block_number_to_peer; await_peers)
+      ||
+      (await_peers; recieve_invalid_certificate_from_peer; tell_peer_certificate_was_invalid)
+    )
 
 ### CID
 
