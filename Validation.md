@@ -58,5 +58,8 @@ and `schema` variable above would be set to:
 
 ### NOTE
 
-There are several validation mechanisms, libraries, etc. which already 
-exist in several languages which can be leveraged to implement this.
+- There are several validation mechanisms, libraries, etc. which already 
+  exist in several languages which can be leveraged for validation.
+- The return value from `is_valid()` above would likely make more sense as
+  a struct.
+
