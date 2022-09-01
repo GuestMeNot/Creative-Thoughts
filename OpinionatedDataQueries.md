@@ -26,29 +26,155 @@ we can augment this structure with metadata to indicate a Table and column to qu
 _NOTE_: while the syntax below may be similar to Rust macros it is not. Also, values are
 assumed to be `null` or `nil` unless explicitly provided.
 
-    struct Person { 
-        #['=']
-        first_name: string,
-    }
 
 1. When we deserialize the following JSon-like structure into a person:
+
+        struct Person {
+          #['=']
+          first_name: string,
+        }
 
         let x = { }
         let person = Person::deserialize(x);
         let query = person.to_sql();
 
-   We would like `query` to have the following value:
+   Where `query` has the following value:
 
         SELECT DISTINCT * FROM Person
 
 2. When we deserialize the following JSon-like structure into a person.
 
+        struct Person {
+          #['=']
+          first_name: string,
+        }
+
         let x = { "first_name": "Hello" }
         let person = Person::deserialize(x);
         let query = person.to_sql();
 
-    We would like `query` to have the following value:
+   Where `query` has the following value:
 
         SELECT DISTINCT * FROM Person WHERE first_name = 'Hello'
 
-3. 
+3. We can create like clauses. 
+
+        struct Person {
+          #['like']
+          first_name: string,
+        }
+
+        let x = { "first_name": "H" }
+        let person = Person::deserialize(x);
+        let query = person.to_sql();
+
+   Where `query` has the following value:
+
+        SELECT DISTINCT * FROM Person WHERE first_name like 'H*'
+
+4. We can query over two fields:
+
+        struct Person {
+          #['like']
+          first_name: string,
+          is_human: bool,
+        }
+
+        let x = { "first_name": "H", "is_human": "true" }
+        let person = Person::deserialize(x);
+        let query = person.to_sql();
+
+   Where `query` has the following value:
+
+        SELECT DISTINCT * FROM Person 
+        WHERE first_name like 'H*' AND is_human = true
+
+5. We can query over 1 of two fields:
+
+        struct Person {
+          #['like']
+          first_name: string,
+          is_human: bool,
+        }
+
+        let x = { "first_name": "H", "is_human": "true" }
+        let person = Person::deserialize(x);
+        let query = person.to_sql();
+
+     Where `query` has the following value:
+
+        SELECT DISTINCT * FROM Person 
+        WHERE first_name like 'H*' AND is_human = true
+
+6. A struct and a database table can have different names:
+
+         #[table(People)]
+         struct Person {
+         }
+
+         let x = {  }
+         let person = Person::deserialize(x);
+         let query = person.to_sql();
+
+   Where `query` has the following value:
+
+        SELECT DISTINCT * FROM People 
+
+7. A field in the struct and a database table can have different names:
+
+        struct Person {
+          #['=']
+          #[field(first)]
+          first_name: string,
+        }
+
+        let x = { "first_name": "Hello" }
+        let person = Person::deserialize(x);
+        let query = person.to_sql();
+
+   Where `query` has the following value:
+
+        SELECT DISTINCT * FROM Person WHERE first = 'Hello'
+
+8. A field can have a `IN` clause:
+
+        struct Person {
+          #['IN']
+          first_name: string,
+        }
+
+        let x = { "first_name": ["Hello", "World"] }
+        let person = Person::deserialize(x);
+        let query = person.to_sql();
+
+   Where `query` has the following value:
+
+        SELECT DISTINCT * FROM Person
+        WHERE first IN ('Hello', 'World')
+
+9. Queries can be across table associations:
+
+        struct Person {
+          #[key]
+          id: int,
+          address: Address,
+        }
+
+        struct Address {
+          id: int,
+          #['=']
+          postal_code: string,
+          #[key(Person)]
+          person_id: int,   
+        }
+
+        let x = { "address": {postal_code: "1234"} }
+        let person = Person::deserialize(x);
+        let query = person.to_sql();
+
+    Where `query` has the following value:
+
+        SELECT DISTINCT * FROM Person p, Address a
+        WHERE p.id = a.person_id AND a.postal_Code = '1234'
+
+    NOTE: Aliases `p` and `a` would need to be generated and unique. 
