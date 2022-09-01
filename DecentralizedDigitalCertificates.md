@@ -1,11 +1,14 @@
 ### Decentralized Digital Certificates
 
 An issue with creating Digital Certificates without a centralized 
-authority is validating the identity of a requester.
+authority is validating identity of an Actor.
 
 Assuming the physical street address and legal name of the owner of
-a digital certificate are not needed as part of the certification process 
-as is often the case in Blockchain applications this approach can be used.
+a digital certificate are not needed as part of the certification process
+(as is often the case in Blockchain applications) this approach can be used.
+
+This example uses Blockchain as an immutable reference mechanism, but other
+approaches are possible.
 
 ### Blockchain based digital authority.
 
