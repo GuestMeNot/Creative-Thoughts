@@ -10,7 +10,22 @@ a digital certificate are not needed as part of the certification process
 This example uses Blockchain as an immutable reference mechanism, but other
 approaches are possible.
 
-### Blockchain based digital authority.
+### Why do we need digital certificates
+Over and above Confidentiality, Access-Control and Data Integrity,
+available through other cryptographic means, we would like the following:
+
+Identification / Authentication:
+- We want like to be able to trace down other problems in the system.
+- Not needed for Legal reasons so the Legal name and address of the certificate holder are not required. 
+
+Non-Repudiation:
+- We want to identify the creator of a piece of data.
+- If the data creates trouble we would like to identify the responsible party. 
+  For example, suppose someone is always creating bad transactions. We would like
+  to know the reason, so we can increase the total throughput in the system.
+  Is the reason due to incompatibility, bad programming, or something else.
+
+### Blockchain based digital certificate authority.
 
 In blockchain applications trust is implicitly given to the original
 creator of the genesis block. This trust can be leveraged to create
@@ -46,13 +61,11 @@ This section outlines the certificate creation process in
 [WIP - not valid lotos]
 
     (
-      (no_peers; only_genesis_block_in_chain; create_certificate; sign_certificate; create_certificate_block; write_certificate_to_storage; await_peers)
+      (no_peers; only_genesis_block_in_chain; create_certificate; sign_certificate; create_genesis_certificate_block; write_certificate_to_storage; await_peers)
       ||
-      (peer_available; no_certificate_in_storage; not_genesis_block_creator; no_blocks; await_peers; request_blocks; search_for_my_cert_block; my_cert_block_found; await_peers)
+      (peer_available; no_certificate_in_storage; not_genesis_block_creator; await_peers; create_certificate; send_certificate_to_peer; receive_certificate_block_number_from_peer; write_certificate_to_storage; await_peers))
       ||
-      (peer_available; no_certificate_in_storage; not_genesis_block_creator; no_blocks; await_peers; request_blocks; search_for_my_cert_block; my_cert_block_not_found; create_certificate; send_certificate_to_peer; receive_certificate_block_number_from_peer; write_certificate_to_storage; await_peers))
-      ||
-      (peer_available; no_certificate_in_storage; not_genesis_block_creator; no_blocks; await_peers; request_blocks; search_for_my_cert_block; my_cert_block_not_found; create_certificate; send_certificate_to_peer; receive_certificate_invalid_from_peer; exit))
+      (peer_available; no_certificate_in_storage; not_genesis_block_creator; await_peers; create_certificate; send_certificate_to_peer; receive_certificate_invalid_from_peer; exit))
       ||
       (no_peers; certificate_in_storage; await_peers; send_certificate_to_peer; receive_certificate_block_number_from_peer; await_peers)
       ||
@@ -66,7 +79,9 @@ This section outlines the certificate creation process in
     (
       (await_peers; receive_certificate_from_peer; certificate_not_already_registered; sign_certificate; create_certificate_block; send_certificate_block_number_to_peer; await_peers)
       ||
-      (await_peers; receive_certificate_from_peer; certificate_already_registered; check_certificate_signature; send_certificate_block_number_to_peer; await_peers)
+      (await_peers; receive_certificate_from_peer; certificate_already_registered; verify_certificate_signature; send_certificate_block_number_to_peer; await_peers)
+      ||
+      (await_peers; (recieve_invalid_certificate_from_peer; tell_peer_certificate_was_invalid) || (no_peer_response; exit))
       ||
       (await_peers; recieve_invalid_certificate_from_peer; tell_peer_certificate_was_invalid)
     )
